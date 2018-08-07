@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/code-schreiber/TractorLocator.svg?branch=master)](https://travis-ci.org/code-schreiber/TractorLocator [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![Build Status](https://travis-ci.org/code-schreiber/TractorLocator.svg?branch=master)](https://travis-ci.org/code-schreiber/TractorLocator) [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 <p align="center">
  <b>TractorLocator</b>
