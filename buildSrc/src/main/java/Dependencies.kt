@@ -5,7 +5,7 @@ object Versions {
     const val versionCode = 1
     const val versionName = "0.0.1"
 
-    const val minSdkVersion = 20
+    const val minSdkVersion = 26
     const val targetSdkVersion = 28
     const val compileSdkVersion = 28
 
