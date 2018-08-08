@@ -5,6 +5,8 @@
     <color name="green_light">#99d066</color>
     <color name="green_dark">#387002</color>
 
-    <color name="grey">#dbdcdb</color>
+    <color name="green_transparent">#5599d066</color>
+
+    <color name="grey">#eeeeee</color>
 
 </resources>
