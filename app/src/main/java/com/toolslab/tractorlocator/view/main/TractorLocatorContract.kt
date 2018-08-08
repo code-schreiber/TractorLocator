@@ -2,6 +2,7 @@ package com.toolslab.tractorlocator.view.main
 
 import com.toolslab.tractorlocator.base_mvp.BaseView
 import com.toolslab.tractorlocator.base_mvp.MvpPresenter
+import com.toolslab.tractorlocator.base_repository.model.CoordinateViewModel
 import com.toolslab.tractorlocator.base_repository.model.DriverViewModel
 import com.toolslab.tractorlocator.base_repository.model.FieldViewModel
 
@@ -14,7 +15,7 @@ interface TractorLocatorContract {
     interface View : BaseView {
         fun getMapAsync()
 
-        fun moveCamera(minLatitude: Double, minLongitude: Double, maxLatitude: Double, maxLongitude: Double)
+        fun moveCamera(coordinate: CoordinateViewModel)
 
         fun addMapDriver(driverViewModel: DriverViewModel)
 

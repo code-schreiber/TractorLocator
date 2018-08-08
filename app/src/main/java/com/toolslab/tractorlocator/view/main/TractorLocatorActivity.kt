@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.toolslab.tractorlocator.R
+import com.toolslab.tractorlocator.base_repository.model.CoordinateViewModel
 import com.toolslab.tractorlocator.base_repository.model.DriverViewModel
 import com.toolslab.tractorlocator.base_repository.model.FieldViewModel
 import com.toolslab.tractorlocator.maps.MapOperations
@@ -59,11 +60,11 @@ class TractorLocatorActivity : BaseActivity(), TractorLocatorContract.View, OnMa
     }
 
     override fun addMapDriver(driverViewModel: DriverViewModel) {
-        mapOperations.addMarker(driverViewModel.name, driverViewModel.lastSeenDate, driverViewModel.coordinate.latitude, driverViewModel.coordinate.longitude)
+        mapOperations.addMarker(driverViewModel.name, driverViewModel.lastSeenDate, driverViewModel.coordinate)
     }
 
-    override fun moveCamera(minLatitude: Double, minLongitude: Double, maxLatitude: Double, maxLongitude: Double) {
-        mapOperations.moveCamera(minLatitude, minLongitude, maxLatitude, maxLongitude)
+    override fun moveCamera(coordinate: CoordinateViewModel) {
+        mapOperations.moveCamera(coordinate)
     }
 
     override fun showLoading() {
