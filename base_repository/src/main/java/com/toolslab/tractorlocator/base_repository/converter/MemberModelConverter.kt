@@ -7,9 +7,11 @@ import javax.inject.Inject
 
 class MemberModelConverter @Inject constructor() : Converter<Member, DriverViewModel> {
 
-    override fun convert(source: Member) =
-            DriverViewModel(source.firstName!!,
-                    source.lastKnownPosition.timestamp!!,
-                    CoordinateViewModel(source.lastKnownPosition.latitude!!, source.lastKnownPosition.longitude!!))
+    override fun convert(source: Member): DriverViewModel {
+        val position = source.lastKnownPosition
+        return DriverViewModel(source.firstName!!,
+                position.timestamp!!,
+                CoordinateViewModel(position.latitude!!, position.longitude!!))
+    }
 
 }
