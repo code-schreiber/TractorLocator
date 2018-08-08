@@ -19,15 +19,21 @@ class Reauthenticator @Inject constructor() : Authenticator {
 
     override fun authenticate(route: Route?, response: Response?): Request? {
         if (response == null) return null
-        if (response.request().header(AUTHORIZATION) != null) return null // Already failed to authenticate
+        val originalRequest = response.request()
+        if (originalRequest.header(AUTHORIZATION) != null) return null // Already failed to authenticate
         if (credentialsStorage.getToken().isEmpty()) {
-            // Get and save token first
-            val credentials = credentialsStorage.getCredentials()
-            apiAuthService.getJwt(credentials.email, credentials.password)
-                    .map { credentialsStorage.saveToken(it.token) }
-                    .blockingGet()
+            synchronized(this) {
+                // TODO Unit test for this multithreading check
+                if (credentialsStorage.getToken().isEmpty()) { // Check if another thread already got a token
+                    // Get and save token first
+                    val credentials = credentialsStorage.getCredentials()
+                    apiAuthService.getJwt(credentials.email, credentials.password)
+                            .map { credentialsStorage.saveToken(it.token) }
+                            .blockingGet()
+                }
+            }
         }
-        return response.request().newBuilder()
+        return originalRequest.newBuilder()
                 .header(AUTHORIZATION, credentialsStorage.getToken())
                 .build()
     }
