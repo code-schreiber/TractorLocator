@@ -82,7 +82,7 @@ class TractorLocatorPresenterTest {
         verify(mockView).addMapDriver(driver2)
         verify(mockView).moveCamera(driversMedianCoordinates)
         verify(mockView, times(2)).hideLoading()
-        verify(underTest.compositeDisposable).add(any())
+        verify(underTest.compositeDisposable, times(2)).add(any())
     }
 
     @Test
