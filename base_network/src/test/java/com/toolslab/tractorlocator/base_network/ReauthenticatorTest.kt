@@ -70,13 +70,15 @@ class ReauthenticatorTest {
 
     @Test
     fun authenticateWhenTokenIsMissing() {
-        val token = ""
         whenever(mockResponse.request()).thenReturn(mockRequest)
         whenever(mockRequest.header(ApiEndpoint.Header.AUTHORIZATION)).thenReturn(null)
         whenever(mockRequest.newBuilder()).thenReturn(mockBuilder)
-        whenever(mockBuilder.header(AUTHORIZATION, token)).thenReturn(mockBuilder)
+        whenever(mockBuilder.header(AUTHORIZATION, jwt.token)).thenReturn(mockBuilder)
         whenever(mockBuilder.build()).thenReturn(mockNewRequest)
-        whenever(underTest.credentialsStorage.getToken()).thenReturn(token)
+        whenever(underTest.credentialsStorage.getToken())
+                .thenReturn("") // First call, no token
+                .thenReturn("") // Second call, no token
+                .thenReturn(jwt.token) // Last call, a token was saved
         whenever(underTest.credentialsStorage.getCredentials()).thenReturn(Credentials(email, password))
         whenever(underTest.apiAuthService.getJwt(email, password)).thenReturn(Single.just(jwt))
 
@@ -89,6 +91,26 @@ class ReauthenticatorTest {
         verify(underTest.apiAuthService).getJwt(email, password)
         verifyNoMoreInteractions(underTest.credentialsStorage)
         verifyNoMoreInteractions(underTest.apiAuthService)
+    }
+
+    @Test
+    fun authenticateFromDifferentThreads() {
+        whenever(mockResponse.request()).thenReturn(mockRequest)
+        whenever(mockRequest.header(ApiEndpoint.Header.AUTHORIZATION)).thenReturn(null)
+        whenever(mockRequest.newBuilder()).thenReturn(mockBuilder)
+        whenever(mockBuilder.header(AUTHORIZATION, jwt.token)).thenReturn(mockBuilder)
+        whenever(mockBuilder.build()).thenReturn(mockNewRequest)
+        whenever(underTest.credentialsStorage.getToken())
+                .thenReturn("") // First call, no token
+                .thenReturn(jwt.token) // Second call, a token
+        whenever(underTest.credentialsStorage.getCredentials()).thenReturn(Credentials(email, password))
+
+        val request = underTest.authenticate(null, mockResponse)
+
+        request shouldEqual mockNewRequest
+        verify(underTest.credentialsStorage, times(3)).getToken()
+        verifyNoMoreInteractions(underTest.credentialsStorage)
+        verifyZeroInteractions(underTest.apiAuthService)
     }
 
 }

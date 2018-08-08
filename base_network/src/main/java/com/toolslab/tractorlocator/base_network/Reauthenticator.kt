@@ -23,7 +23,6 @@ class Reauthenticator @Inject constructor() : Authenticator {
         if (originalRequest.header(AUTHORIZATION) != null) return null // Already failed to authenticate
         if (credentialsStorage.getToken().isEmpty()) {
             synchronized(this) {
-                // TODO Unit test for this multithreading check
                 if (credentialsStorage.getToken().isEmpty()) { // Check if another thread already got a token
                     // Get and save token first
                     val credentials = credentialsStorage.getCredentials()
