@@ -35,7 +35,7 @@ class NetworkModule {
 
     @Provides
     @Named(API)
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor, reauthenticator: Reauthenticator) =
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor, reauthenticator: Reauthenticator): OkHttpClient =
             OkHttpClient.Builder()
                     .addInterceptor(httpLoggingInterceptor)
                     .authenticator(reauthenticator)
@@ -57,7 +57,7 @@ class NetworkModule {
 
     @Provides
     @Named(AUTH_API)
-    fun provideOkHttpAuthClient(httpLoggingInterceptor: HttpLoggingInterceptor) =
+    fun provideOkHttpAuthClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
             OkHttpClient.Builder()
                     .addInterceptor(httpLoggingInterceptor)
                     .build()

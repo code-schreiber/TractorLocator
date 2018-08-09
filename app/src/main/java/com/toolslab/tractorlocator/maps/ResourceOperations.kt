@@ -15,7 +15,7 @@ internal class ResourceOperations @Inject constructor() {
     @Inject
     internal lateinit var resources: Resources
 
-    internal fun color(@ColorRes id: Int) = resources.getColor(id)
+    internal fun color(@ColorRes id: Int) = resources.getColor(id, null)
 
     internal fun resourceAsBitmap(@DrawableRes id: Int): Bitmap? =
             getBitmap(resources.getDrawable(id, null) as VectorDrawable)

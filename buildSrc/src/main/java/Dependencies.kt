@@ -26,7 +26,7 @@ object Versions {
 
     const val rxAndroid = "2.0.2"
 
-    val lottie = "2.5.5"
+    const val lottie = "2.5.5"
 
     // Tests
     const val mockitoKotlin = "1.5.0"
